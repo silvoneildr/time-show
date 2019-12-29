@@ -1,6 +1,12 @@
+import { themeColors } from '../styles/_variables';
+import OpenSansRegular from '../fonts/OpenSansRegular.ttf';
 import { createGlobalStyle } from 'styled-components';
 
 export default createGlobalStyle`
+  @font-face {
+    font-family: 'Open Sans';
+    src: url(${OpenSansRegular});
+  }
   * {
     margin: 0;
     padding: 0;
@@ -9,13 +15,13 @@ export default createGlobalStyle`
   }
   html, body, #root {
     height: 100%;
-    background-color: #FAFAFA;
+    color: ${themeColors.text};
+    background-color: ${themeColors.background};
   }
   body {
     text-rendering: optimizeLegibility !important;
     -webkit-font-smoothing: antialiased !important;
     font-family: Open Sans;
-    /* color: #707070; */
   }
 
   ::-webkit-scrollbar {
