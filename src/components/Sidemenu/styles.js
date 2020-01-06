@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { themeColors } from '../../assets/styles/_variables';
 
 export const Nav = styled.nav`
-  width: 14.8rem;
+  width: 13.8rem;
   background-color: ${themeColors.secondary};
   height: 100%;
   position: fixed;

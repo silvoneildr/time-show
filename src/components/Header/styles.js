@@ -2,8 +2,7 @@ import styled from 'styled-components';
 import { themeColors } from '../../assets/styles/_variables';
 
 export const Container = styled.div`
-  height: 5.5rem;
-  border-bottom: 1px solid #cccccc;
+  height: 4rem;
   display: flex;
   justify-content: space-between;
   align-items: center;

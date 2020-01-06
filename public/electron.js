@@ -1,7 +1,4 @@
-const electron = require('electron');
-const { app } = electron;
-const { BrowserWindow } = electron;
-
+const { app, BrowserWindow } = require('electron');
 const path = require('path');
 const isDev = require('electron-is-dev');
 
@@ -9,6 +6,7 @@ let mainWindow;
 
 function createWindow() {
   mainWindow = new BrowserWindow({
+    show: false,
     width: 1024,
     height: 720,
     webPreferences: {
@@ -22,15 +20,19 @@ function createWindow() {
       : `file://${path.resolve(__dirname, '..', 'build', 'index.html')}`,
   );
 
-  mainWindow.setMenuBarVisibility(false)
-
   if (isDev) {
     mainWindow.webContents.openDevTools();
   }
 
+  mainWindow.setMenuBarVisibility(false)
+
   mainWindow.on('closed', () => {
     mainWindow = null;
   });
+
+  mainWindow.once('ready-to-show', () => {
+    mainWindow.show()
+  })
 }
 
 app.on('ready', createWindow);

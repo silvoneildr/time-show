@@ -22,8 +22,8 @@ export default function Sidemenu() {
   return (
     <Nav isExpanded={true}>
       <MenuContent>
-        {MENU_ITEMS.map(item => (
-          <MenuItem to={item.link} selected={false} >
+        {MENU_ITEMS && MENU_ITEMS.length > 0 && MENU_ITEMS.map(item => (
+          <MenuItem key={item.alt} to={item.link} selected={false} >
             <MenuIcon>
               <img width={item.width} src={item.icon} alt={item.alt} />
             </MenuIcon>
