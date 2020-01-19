@@ -29,12 +29,17 @@ export const ContainerTask = styled.div`
 	display: flex;
 	justify-content: space-between;
 	padding: 0 0.8rem;
-	background-color: ${themeColors.background};
+	background-color: ${(props) => (props.colorTask ? themeColors.light : themeColors.background)};
 	border: 0.09rem solid lightgray;
 	margin: 0.2rem;
 `;
 
 export const Icon = styled.img`padding: 0 0.2rem;`;
+
+export const StartStop = styled.div`
+	cursor: pointer;
+	display: flex;
+`;
 
 export const TaskLeft = styled.div`
 	display: flex;
