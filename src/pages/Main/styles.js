@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import { themeColors } from '../../assets/styles/_variables';
 
 export const Container = styled.div`
+  height: 91vh;
 	display: -webkit-box;
 	display: -webkit-flex;
 	display: -ms-flexbox;
@@ -12,13 +13,26 @@ export const Container = styled.div`
 	color: ${themeColors.text};
 `;
 
+export const Content = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding: 0.5rem;
+`;
+
 export const ContainerProjeto = styled.div`
-	display: flex;
-	justify-content: space-between;
-	padding: 1.2rem 1rem;
-	margin: 0.2rem;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  margin: 0.2rem;
+  border: 0.09rem solid lightgray;
+  height: 3.5rem;
+  align-items: center;
 	background-color: ${themeColors.background};
-	border: 0.09rem solid lightgray;
 	span {
 		margin: 0 0.75rem;
 		font-size: 1.8rem !important;

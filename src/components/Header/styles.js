@@ -2,11 +2,11 @@ import styled from 'styled-components';
 import { themeColors } from '../../assets/styles/_variables';
 
 export const Container = styled.div`
-  height: 4rem;
+  height: 9vh;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0.5rem 2rem 0 1rem;
+  padding: 0rem 1rem;
   background-color: ${themeColors.primary};
 `;
 
@@ -20,7 +20,7 @@ export const Title = styled.span`
 `;
 
 export const Icon = styled.img`
-  padding-bottom: 6px;
+  /* padding-bottom: 6px; */
 `;
 
 export const Username = styled.p`

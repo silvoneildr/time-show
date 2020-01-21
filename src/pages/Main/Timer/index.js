@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 
-import { ContainerTask, TaskLeft, TaskRight, Icon, StartStop } from './styles';
-import Start from '../../../assets/img/icon_play.svg';
+import { ContainerTask, TaskColumn, Icon, StartStop } from './styles';
+import Start from '../../../assets/img/icon_start.svg';
 import Stop from '../../../assets/img/icon_stop.svg';
+import { formatTime } from '../helper';
 
 const Timer = ({ task }) => {
 	const [ seconds, setSeconds ] = useState(0);
@@ -30,15 +31,15 @@ const Timer = ({ task }) => {
 	return (
 		<div className="app">
 			<ContainerTask>
-				<TaskLeft>
+				<TaskColumn>
 					<span>{task.name}</span>
-				</TaskLeft>
-				<TaskRight>
-					<span>{seconds}</span>
+				</TaskColumn>
+				<TaskColumn>
+					<span>{formatTime(seconds)}</span>
 					<StartStop onClick={toggle}>
 						<Icon width="35px" src={isActive ? Stop : Start} alt="startStop" />
 					</StartStop>
-				</TaskRight>
+				</TaskColumn>
 			</ContainerTask>
 		</div>
 	);

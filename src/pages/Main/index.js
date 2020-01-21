@@ -3,6 +3,7 @@ import React from 'react';
 import {
   Container,
   ContainerProjeto,
+  Content,
 } from './styles';
 
 import Header from '../../components/Header';
@@ -74,13 +75,15 @@ export default function Main() {
       <Header />
       <SidebarMenu />
       <Container>
-        <ContainerProjeto>
-          <span>{projects[0].name} </span>
-          <span>Total: 00:00:00</span>
-        </ContainerProjeto>
-        {tasks && tasks.length > 0 && tasks.map(item => (
-          <Timer key={item.id} task={item}/>
-        ))}
+        <Content>
+          <ContainerProjeto>
+            <span>{projects[0].name} </span>
+            <span>Total: 00:00:00</span>
+          </ContainerProjeto>
+          {tasks && tasks.length > 0 && tasks.map(item => (
+            <Timer key={item.id} task={item}/>
+          ))}
+        </Content>
       </Container>
     </>
   );
