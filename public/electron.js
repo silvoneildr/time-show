@@ -1,11 +1,16 @@
-const { app, BrowserWindow, Tray, Menu } = require('electron');
+const { app, BrowserWindow, Tray, Menu, ipcMain, dialog } = require('electron');
 const path = require('path');
 const isDev = require('electron-is-dev');
 
-let mainWindow;
+let mainWindow = null;
 let tray = null;
 let contextMenu = null;
 let iconPath = null;
+
+function forceCloseMainWindow() {
+  app.isQuiting = true;
+  app.quit();
+}
 
 function renderTrayBar(mainWindow) {
 	iconPath = path.join(__dirname, './iconclock.png');
@@ -32,12 +37,12 @@ function renderTrayBar(mainWindow) {
 		{
 			label: 'Fechar',
 			click() {
-        app.isQuiting = true; app.quit()
+        forceCloseMainWindow();
 			}
 		}
 	]);
 
-	tray.setToolTip('Time Own Electron.');
+	tray.setToolTip('Time Show Electron.');
 	tray.setContextMenu(contextMenu);
 }
 
@@ -84,3 +89,16 @@ app.on('activate', () => {
 		createWindow();
 	}
 });
+
+function onCloseWindow(e, options) {
+  const window = BrowserWindow.getFocusedWindow();
+  const ret = !!dialog.showMessageBox(window, options);
+  if (ret) {
+    e.preventDefault();
+    forceCloseMainWindow();
+  }
+ }
+
+ipcMain.once('confirm-close', (event, options) => {
+  onCloseWindow(event, options);
+})

@@ -14,9 +14,9 @@
     "styled-components": "^4.4.1"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
+    "start": "rescripts start",
+    "build": "rescripts build",
+    "test": "rescripts test",
     "eject": "react-scripts eject",
     "dev": "concurrently \"BROWSER=none yarn start\" \"wait-on http://localhost:3000 && electron public/electron.js\"",
     "postinstall": "electron-builder install-app-deps",
@@ -43,8 +43,8 @@
     "@rescripts/rescript-env": "^0.0.11",
     "concurrently": "^5.0.2",
     "electron": "^7.1.7",
-    "electron-builder": "^21.2.0",
-    "typescript": "^3.7.4",
+    "electron-builder": "^22.2.0",
+    "typescript": "^3.7.5",
     "wait-on": "^3.3.0"
   },
   "author": {
@@ -56,8 +56,8 @@
   "main": "public/electron.js",
   "build": {
     "appId": "com.seu-site.seu-app",
-    "productName": "MyApp",
-    "copyright": "Copyright © 2019 Seu Nome",
+    "productName": "Time Show",
+    "copyright": "Copyright © 2019 Silvonei Rosa",
     "mac": {
       "category": "public.app-category.utilities"
     },

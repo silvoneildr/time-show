@@ -1,5 +1,5 @@
 import React from 'react';
-
+import { ipcRenderer } from 'electron';
 import { Nav, MenuItem, MenuIcon, MenuText, MenuContent } from './styles';
 
 import IconHome from '../../assets/img/icon_home.svg';
@@ -15,15 +15,35 @@ const MENU_ITEMS = [
   { link: '', width: '26px', icon: IconEditTime, alt:'alt_edit_time', title: 'Edit Time' },
   { link: '', width: '40px', icon: IconSettings, alt:'alt_setttings', title: 'Settings' },
   { link: '', width: '40px', icon: IconHelp, alt:'alt_help', title: 'Help' },
-  { link: '', width: '40px', icon: IconLogout, alt:'alt_logout', title: 'Logout' },
+  { link: '', width: '40px', icon: IconLogout, alt:'alt_logout', title: 'Fechar' },
 ];
 
 export default function Sidemenu() {
+  function quitApp() {
+    const options = {
+      title: 'Confirme a ação',
+      buttons: ['Fechar', 'Cancelar'],
+      type: 'question',
+      message: 'Fechar aplicação',
+      detail: 'Deseja realmente fechar a aplicação?',
+    };
+    ipcRenderer.send('confirm-close', options);
+  }
+
   return (
     <Nav isExpanded={true}>
       <MenuContent>
         {MENU_ITEMS && MENU_ITEMS.length > 0 && MENU_ITEMS.map(item => (
-          <MenuItem key={item.alt} to={item.link} selected={false} >
+          <MenuItem
+            key={item.alt}
+            to={item.link}
+            selected={false}
+            onClick={() => {
+              if (item.alt === 'alt_logout') {
+                quitApp();
+              }
+            }}
+          >
             <MenuIcon>
               <img width={item.width} src={item.icon} alt={item.alt} />
             </MenuIcon>
