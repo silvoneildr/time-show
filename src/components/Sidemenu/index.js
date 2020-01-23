@@ -30,6 +30,10 @@ export default function Sidemenu() {
     ipcRenderer.send('confirm-close', options);
   }
 
+  function openFile() {
+    ipcRenderer.send('open-file');
+  }
+
   return (
     <Nav isExpanded={true}>
       <MenuContent>
@@ -41,6 +45,9 @@ export default function Sidemenu() {
             onClick={() => {
               if (item.alt === 'alt_logout') {
                 quitApp();
+              }
+              if (item.alt === 'alt_projects') {
+                openFile();
               }
             }}
           >

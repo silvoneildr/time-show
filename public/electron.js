@@ -1,4 +1,12 @@
-const { app, BrowserWindow, Tray, Menu, ipcMain, dialog } = require('electron');
+const {
+  app,
+  BrowserWindow,
+  dialog,
+  ipcMain,
+  Menu,
+  Tray,
+} = require('electron');
+
 const path = require('path');
 const isDev = require('electron-is-dev');
 
@@ -92,13 +100,29 @@ app.on('activate', () => {
 
 function onCloseWindow(e, options) {
   const window = BrowserWindow.getFocusedWindow();
-  const ret = !!dialog.showMessageBox(window, options);
-  if (ret) {
+  const ret = dialog.showMessageBoxSync(window, options);
+
+  if (ret === 0) {
     e.preventDefault();
     forceCloseMainWindow();
   }
  }
 
-ipcMain.once('confirm-close', (event, options) => {
+ipcMain.on('confirm-close', (event, options) => {
   onCloseWindow(event, options);
-})
+});
+
+function openFileToRenderer(event) {
+  dialog.showOpenDialog(mainWindow, {
+    properties: ['openFile', 'openDirectory']
+  }).then(result => {
+    console.log(result.canceled)
+    console.log(result.filePaths)
+  }).catch(err => {
+    console.log(err)
+  })
+}
+
+ipcMain.on('open-file', event => {
+  openFileToRenderer(event);
+});
