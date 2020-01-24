@@ -1,1 +1,41 @@
-{}
+{
+  "editor.tabSize": 2,
+  "editor.renderWhitespace": "boundary",
+  "editor.fontFamily": "Fira Code",
+  "editor.fontLigatures": true,
+  "editor.fontSize": 16,
+  "editor.lineHeight": 24,
+  "editor.autoIndent": "full",
+  "editor.formatOnSave": false,
+  "editor.maxTokenizationLineLength": 900000000000000,
+  "editor.renderIndentGuides": true,
+  "editor.parameterHints.enabled": false,
+  "editor.insertSpaces": true,
+  "editor.detectIndentation": false,
+  "editor.rulers": [
+    100,
+    120
+  ],
+  "files.trimFinalNewlines": true,
+  "files.trimTrailingWhitespace": true,
+  "javascript.updateImportsOnFileMove.enabled": "never",
+  "prettier.singleQuote": true,
+  "prettier.printWidth": 100,
+  "prettier.trailingComma": "all",
+  "eslint.codeActionsOnSave.mode": "all",
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[javascriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[html]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[json]": {
+    "editor.defaultFormatter": "vscode.json-language-features"
+  },
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": false
+  },
+}
