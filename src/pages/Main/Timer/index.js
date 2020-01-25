@@ -5,7 +5,7 @@ import Start from '../../../assets/img/icon_start.svg';
 import Stop from '../../../assets/img/icon_stop.svg';
 import { formatTime } from '../helper';
 
-const Timer = ({ task }) => {
+const Timer = ({ task, totalTime, setTotalTime }) => {
 	const [ seconds, setSeconds ] = useState(0);
 	const [ isActive, setIsActive ] = useState(false);
 
@@ -19,20 +19,21 @@ const Timer = ({ task }) => {
 			if (isActive) {
 				interval = setInterval(() => {
 					setSeconds((seconds) => seconds + 1);
+					setTotalTime((setTotalTime) => setTotalTime + 1);
 				}, 1000);
 			} else if (!isActive && seconds !== 0) {
 				clearInterval(interval);
 			}
 			return () => clearInterval(interval);
 		},
-		[ isActive, seconds ]
+		[isActive, seconds, setTotalTime]
 	);
 
 	return (
 		<div className="app">
 			<ContainerTask>
 				<TaskColumn>
-					<span>{task.name}</span>
+					<span>{task}</span>
 				</TaskColumn>
 				<TaskColumn>
 					<span>{formatTime(seconds)}</span>

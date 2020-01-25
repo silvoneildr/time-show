@@ -9,82 +9,49 @@ import {
 import Header from '../../components/Header';
 import SidebarMenu from '../../components/Sidemenu';
 import Timer from './Timer';
-
-const initTimer = 0;
-const projects = [
-  {
-    id: 1,
-    name: 'Projeto 1',
-    tasks: [
-      {
-        id: 1,
-        name: 'Task 1',
-        timer: initTimer,
-      },
-      {
-        id: 2,
-        name: 'Task 2',
-        timer: initTimer,
-      },
-      {
-        id: 3,
-        name: 'Task 3',
-        timer: initTimer,
-      },
-      {
-        id: 4,
-        name: 'Task 4',
-        timer: initTimer,
-      },
-      {
-        id: 5,
-        name: 'Task 5',
-        timer: initTimer,
-      },
-      {
-        id: 6,
-        name: 'Task 6',
-        timer: initTimer,
-      },
-      {
-        id: 7,
-        name: 'Task 7',
-        timer: initTimer,
-      },
-      {
-        id: 8,
-        name: 'Task 8',
-        timer: initTimer,
-      }
-    ]
-  },
-]
+import { formatTime } from './helper';
+import { get, BASE_URL } from '../../services/api';
 
 export default function Main() {
+  const [repo, setRepo] = React.useState('');
+  const [totalTime, setTotalTime] = React.useState(0);
   const [tasks, setTasks] = React.useState([]);
 
   React.useEffect(() => {
-    function fetchData() {
-      setTasks([...projects[0].tasks]);
+    async function fetchRepository() {
+      const { data } = await get(`${BASE_URL}/time-own`);
+      setRepo(data.name);
     }
-    fetchData();
+    async function fetchTasks() {
+      const { data } = await get(`${BASE_URL}/time-own/issues`);
+      setTasks([...data]);
+    }
+    fetchRepository();
+    fetchTasks();
   }, []);
 
   return (
     <>
       <Header />
       <SidebarMenu />
-      <Container>
-        <Content>
-          <ContainerProjeto>
-            <span>{projects[0].name} </span>
-            <span>Total: 00:00:00</span>
-          </ContainerProjeto>
-          {tasks && tasks.length > 0 && tasks.map(item => (
-            <Timer key={item.id} task={item}/>
-          ))}
-        </Content>
-      </Container>
+      {repo && repo.length > 0 && tasks && tasks.length > 0 &&
+        <Container>
+          <Content>
+            <ContainerProjeto>
+              <span>{repo} </span>
+              <span>{`total: ${formatTime(totalTime)}`}</span>
+            </ContainerProjeto>
+            {tasks && tasks.length > 0 && tasks.map(item => (
+              <Timer
+                key={item.id}
+                task={item.title}
+                totalTime={totalTime}
+                setTotalTime={setTotalTime}
+              />
+            ))}
+          </Content>
+        </Container>
+      }
     </>
   );
 }

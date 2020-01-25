@@ -1,5 +1,5 @@
 import React from 'react';
-import { ipcRenderer } from 'electron';
+import { ipcRenderer, remote } from 'electron';
 import { Nav, MenuItem, MenuIcon, MenuText, MenuContent } from './styles';
 
 import IconHome from '../../assets/img/icon_home.svg';
@@ -10,28 +10,34 @@ import IconHelp from '../../assets/img/icon_help.svg';
 import IconLogout from '../../assets/img/icon_logout.svg';
 
 const MENU_ITEMS = [
-  { link: '', width: '26px', icon: IconHome, alt:'alt_home', title: 'Home' },
-  { link: '', width: '26px', icon: IconProjects, alt:'alt_projects', title: 'Projects' },
-  { link: '', width: '26px', icon: IconEditTime, alt:'alt_edit_time', title: 'Edit Time' },
-  { link: '', width: '40px', icon: IconSettings, alt:'alt_setttings', title: 'Settings' },
-  { link: '', width: '40px', icon: IconHelp, alt:'alt_help', title: 'Help' },
-  { link: '', width: '40px', icon: IconLogout, alt:'alt_logout', title: 'Fechar' },
+  { type: 'HOME', width: '26px', icon: IconHome, alt:'alt_home', title: 'Home' },
+  { type: 'PROJECT', width: '26px', icon: IconProjects, alt:'alt_projects', title: 'Projects' },
+  { type: 'EDIT_TIME', width: '26px', icon: IconEditTime, alt:'alt_edit_time', title: 'Edit Time' },
+  { type: 'SETTINGS', width: '40px', icon: IconSettings, alt:'alt_setttings', title: 'Settings' },
+  { type: 'HELP', width: '40px', icon: IconHelp, alt:'alt_help', title: 'Help' },
+  { type: 'QUIT', width: '40px', icon: IconLogout, alt:'alt_logout', title: 'Fechar' },
 ];
 
 export default function Sidemenu() {
-  function quitApp() {
-    const options = {
-      title: 'Confirme a ação',
-      buttons: ['Fechar', 'Cancelar'],
-      type: 'question',
-      message: 'Fechar aplicação',
-      detail: 'Deseja realmente fechar a aplicação?',
-    };
-    ipcRenderer.send('confirm-close', options);
-  }
-
-  function openFile() {
-    ipcRenderer.send('open-file');
+  function getMenuTypeFunc(type) {
+    const objTypesFunctions = {
+      HOME: () => {},
+      PROJECT: () => ipcRenderer.send('open-file'),
+      QUIT: () => {
+        const options = {
+          title: 'Confirme a ação',
+          buttons: ['Fechar', 'Cancelar'],
+          type: 'question',
+          message: 'Fechar aplicação',
+          detail: 'Deseja realmente fechar a aplicação?',
+        };
+        ipcRenderer.send('confirm-close', options);
+      },
+      EDIT_TIME: () => {
+        remote.dialog.showErrorBox('Ocorreu um erro!', 'Tente refazer a operação.')
+      },
+    }
+    return objTypesFunctions[type]();
   }
 
   return (
@@ -42,14 +48,7 @@ export default function Sidemenu() {
             key={item.alt}
             to={item.link}
             selected={false}
-            onClick={() => {
-              if (item.alt === 'alt_logout') {
-                quitApp();
-              }
-              if (item.alt === 'alt_projects') {
-                openFile();
-              }
-            }}
+            onClick={() => getMenuTypeFunc(item.type)}
           >
             <MenuIcon>
               <img width={item.width} src={item.icon} alt={item.alt} />
